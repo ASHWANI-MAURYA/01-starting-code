@@ -1,43 +1,46 @@
-import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { AuthContext } from '../store/auth-context';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Button } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import CategoryScreen from './CategoryScreen';
+import MealsOverViewScreen from './MealsOverViewScreen';
+import MealDetailScreen from './mealDetailScreen'
+import React from 'react'
+const Stack = createNativeStackNavigator();
 
-function WelcomeScreen() {
-  // const [fetchedMessage, setFetchedMessage] = useState('');
-
-  const authCtx = useContext(AuthContext);
-  const token =authCtx.token;
-  // useEffect(() => {
-  //   axios.get(
-  //     'https://console.firebase.google.com/u/0/project/api-project-93a2b/database/api-project-93a2b-default-rtdb/data/~2Fmessage.json?auth='+token
-  //   ).then((response) => {
-  //     setFetchedMessage(response.data);
-  //     window.alert(response.data);
-      
-  //   });
-  // }, [token]);
+export default function App() {
   return (
-    <View style={styles.rootContainer}>
-      <Text style={styles.title}>Welcome!</Text>
-      <Text>You authenticated successfully!</Text>
-      {/* <Text>{fetchedMessage}</Text> */}
-    </View>
+    <>
+      <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#351401' }, headerTintColor: 'white', contentStyle: { backgroundColor: '#3f2f25' } }}>
+        <Stack.Screen name='MealsCategories' component={CategoryScreen}
+          options={{ title: 'All Categories' }} />
+        <Stack.Screen name='MealsOverView' component={MealsOverViewScreen}
+        //  options={({route,navigation})=>{
+        //   const catId=route.params.CategoryId;
+        //   return{
+        //     title:catId,
+
+        //   };
+        // }} 
+        />
+        <Stack.Screen name='MealDetailScreen' component={MealDetailScreen}
+        // options={{
+        //   headerRight: () => {
+        //     return (
+        //       <Button />
+        //     )
+        //   }
+        // }}
+        />
+      </Stack.Navigator>
+    </>
   );
 }
 
-export default WelcomeScreen;
-
 const styles = StyleSheet.create({
-  rootContainer: {
+  container: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: '#fff',
     alignItems: 'center',
-    padding: 32,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 8,
+    justifyContent: 'center',
   },
 });
